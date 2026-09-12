@@ -2,15 +2,24 @@ const express = require('express');
 const dotenv = require('dotenv')
 const cookieParser = require("cookie-parser")
 const connectDB = require('./config/db');
+const cors = require("cors")
 const app = express()
 dotenv.config()
 
 app.use(express.json())
 
 const authRouter = require("./routes/auth")
+const notesRouter = require("./routes/notes")
 
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}))
+
+app.use(cookieParser())
 
 app.use("/", authRouter)
+app.use("/", notesRouter)
 
 connectDB().then(() => {
     console.log("Database connected successfully");

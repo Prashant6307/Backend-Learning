@@ -4,7 +4,7 @@ const UserModel = require("../models/user")
 const userAuth = async (req, res, next) => {
 
     try {
-        const { token } = req.cookie
+        const { token } = req.cookies
 
         if(!token){
             throw new Error ("Token is not valid")
@@ -13,12 +13,13 @@ const userAuth = async (req, res, next) => {
 
         const { _id } = decodedObj
 
-        const user = await UserModel.findBy(_id)
+        const user = await UserModel.findById(_id)
 
         if (!user) {
             throw new Error("User not found")
         }
 
+        req.user = user
         next()
     }
     catch(err){
