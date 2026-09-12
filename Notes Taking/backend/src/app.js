@@ -4,6 +4,7 @@ const connectDB = require('./config/db');
 const app = express()
 dotenv.config()
 
+app.use(express.json())
 
 connectDB().then(() => {
     console.log("Database connected successfully");
