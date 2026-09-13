@@ -23,7 +23,7 @@ const Login = () => {
             console.log(err.message)
         }
 
-        navigate("/notes")
+        navigate("/note")
 
 
     }
@@ -32,7 +32,7 @@ const Login = () => {
 
         console.log(res.data)
 
-        navigate("/notes")
+        navigate("/note")
     }
 
     return (
