@@ -7,6 +7,8 @@ import { addNotes, removeNote, updateNote, updateNoteStatus } from "../utils/all
 
 const Notes = () => {
 
+    const searchNotesResults = useSelector(store => store.search)
+
     const dispatch = useDispatch()
     const [editId, setEditId] = useState(null)
 
@@ -41,7 +43,7 @@ const Notes = () => {
     }
 
     const changeStatus = async (id, status) => {
-        
+
         try {
             const res = await axios.patch(
                 `${import.meta.env.VITE_BASE_URL}/notes/status/${id}`,
@@ -69,9 +71,9 @@ const Notes = () => {
     }
 
     const handleSave = async (id, status) => {
-        if(status==="completed"){
+        if (status === "completed") {
             return
-        } 
+        }
         const note = showAllNotes.find(note => note._id === id);
 
         try {
@@ -103,7 +105,10 @@ const Notes = () => {
         <div>
             <Navbar />
             <div className="flex flex-wrap justify-center">
-                {showAllNotes.map((allNotes) =>
+                {showAllNotes.filter((note) =>
+                    note.title.toLowerCase().includes(searchNotesResults.toLowerCase()) ||
+                    note.description.toLowerCase().includes(searchNotesResults.toLowerCase())
+                ).map((allNotes) =>
                     <div key={allNotes._id}
                         className="flex justify-center items-center ">
 

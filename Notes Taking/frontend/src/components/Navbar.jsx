@@ -1,13 +1,21 @@
+import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
+import { addSearch } from "../utils/searchSlice"
 
 const Navbar = () => {
+    const dispatch = useDispatch()
     return (
         <div className="navbar bg-base-100 shadow-sm">
             <div className="flex-1">
                 <a className="btn btn-ghost text-xl">📋Notes Taking</a>
             </div>
             <div className="flex gap-2">
-                <input type="text" placeholder="Search Notes" className="input w-24 md:w-auto" />
+                <input 
+                type="text" 
+                placeholder="Search Notes" 
+                className="input w-24 md:w-auto"
+                onChange={(e)=> dispatch(addSearch(e.target.value))}
+                />
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
