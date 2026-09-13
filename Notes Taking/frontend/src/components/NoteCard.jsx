@@ -1,10 +1,18 @@
 import axios from "axios"
 import { useState } from "react"
+import Notify from "./Notify"
 
 const NoteCard = () => {
 
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
+    const [notify, setNotify] = useState(null)
+
+    const handleTimeout = ()=>{
+        setTimeout(() => {
+            setNotify(null);
+        }, 5000);
+    }
 
     const handleDiscard = () => {
         setDescription("")
@@ -13,20 +21,42 @@ const NoteCard = () => {
 
     const handleSave = async () => {
         try {
-            const res = await axios.post(import.meta.env.VITE_BASE_URL + "/notes", { title, description }, { withCredentials: true })
-            setDescription("")
-            setTitle("")
-        }
-        catch (err) {
+            await axios.post(
+                import.meta.env.VITE_BASE_URL + "/notes",
+                { title, description },
+                { withCredentials: true }
+            );
+
+            setDescription("");
+            setTitle("");
+
+            setNotify({
+                message: "Task Created Successfully",
+                type: "success"
+            });
+            handleTimeout()
+
+        } catch (err) {
             console.log(err.message);
 
+            setNotify({
+                message: err.response?.data?.message || err.message,
+                type: "error"
+            });
+            handleTimeout()
         }
+    };
 
 
-    }
+
     return (
         <div className="flex justify-center items-center ">
-
+            {notify && (
+                <Notify
+                    message={notify.message}
+                    type={notify.type}
+                />
+            )}
             <div className="flex flex-col m-8 border p-2 rounded-lg w-60 sm:w-md md:w-xl">
                 <label className="font-bold">Title</label>
                 <input

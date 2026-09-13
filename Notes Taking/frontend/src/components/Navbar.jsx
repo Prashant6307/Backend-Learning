@@ -19,13 +19,13 @@ const Navbar = () => {
     return (
         <div className="navbar bg-base-100 shadow-sm">
             <div className="flex-1">
-                <a className="btn btn-ghost text-xl">📋Notes Taking</a>
+                <Link to="/note" className="btn btn-ghost text-sm  sm:text-xl ">📋Notes Taking</Link>
             </div>
             <div className="flex gap-2">
                 <input
                     type="text"
                     placeholder="Search Notes"
-                    className="input w-24 md:w-auto"
+                    className="border w-24 sm:p-1 rounded-md sm:w-64"
                     onChange={(e) => dispatch(addSearch(e.target.value))}
                 />
                 <div className="dropdown dropdown-end">

@@ -3,6 +3,7 @@ import Navbar from "./Navbar"
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addNotes, removeNote, updateNote, updateNoteStatus } from "../utils/allNotesSlice";
+import Notify from "./Notify";
 
 
 const Notes = () => {
@@ -10,9 +11,16 @@ const Notes = () => {
     const searchNotesResults = useSelector(store => store.search)
 
     const dispatch = useDispatch()
+    const [notify, setNotify] = useState(null);
     const [editId, setEditId] = useState(null)
 
     const showAllNotes = useSelector(store => store.allUserNotes)
+
+    const handleTimeout = () => {
+        setTimeout(() => {
+            setNotify(null);
+        }, 5000);
+    }
 
     const fetchAllNotes = async () => {
         try {
@@ -36,9 +44,23 @@ const Notes = () => {
             )
             dispatch(removeNote(id))
 
+            setNotify({
+                message: "Task Deleted",
+                type: "success"
+            });
+
+            handleTimeout()
+
             console.log(res.data);
         } catch (err) {
-            console.log(err.response?.data);
+            console.log(err.response?.data)
+
+            setNotify({
+                message: err.message,
+                type: "success"
+            });
+
+            handleTimeout()
         }
     }
 
@@ -58,11 +80,23 @@ const Notes = () => {
 
             dispatch(updateNoteStatus({ id, status }))
 
+            setNotify({
+                message: "Status updated",
+                type: "success"
+            });
 
+            handleTimeout()
 
             console.log(res.data);
         } catch (err) {
-            console.log(err.response?.data);
+            console.log(err.response?.data)
+
+            setNotify({
+                message: err.message,
+                type: "success"
+            });
+
+            handleTimeout()
         }
     }
 
@@ -92,9 +126,20 @@ const Notes = () => {
 
             console.log(res.data);
 
-            setEditId(null);
+            setEditId(null)
+            setNotify({
+                message: "Task Saved Successfully",
+                type: "success"
+            });
+
+            handleTimeout()
         } catch (err) {
-            console.log(err.response?.data);
+            console.log(err.message)
+            setNotify({
+                message: err.response?.data?.message || err.message,
+                type: "error"
+            })
+            handleTimeout()
         }
     }
     useEffect(() => {
@@ -104,6 +149,12 @@ const Notes = () => {
     return (
         <div>
             <Navbar />
+            {notify && (
+                <Notify
+                    message={notify.message}
+                    type={notify.type}
+                />
+            )}
             <div className="flex flex-wrap justify-center">
                 {showAllNotes.filter((note) =>
                     note.title.toLowerCase().includes(searchNotesResults.toLowerCase()) ||
