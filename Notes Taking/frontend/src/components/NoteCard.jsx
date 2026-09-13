@@ -3,19 +3,19 @@ import { useState } from "react"
 
 const NoteCard = () => {
 
-    const [title, setTile] = useState("")
+    const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
 
     const handleDiscard = () => {
         setDescription("")
-        setTile("")
+        setTitle("")
     }
 
     const handleSave = async () => {
         try {
             const res = await axios.post(import.meta.env.VITE_BASE_URL + "/notes", { title, description }, { withCredentials: true })
             setDescription("")
-            setTile("")
+            setTitle("")
         }
         catch (err) {
             console.log(err.message);
@@ -34,7 +34,7 @@ const NoteCard = () => {
                     placeholder="Title"
                     className="border p-2 rounded-lg"
                     value={title}
-                    onChange={(e) => setTile(e.target.value)}
+                    onChange={(e) => setTitle(e.target.value)}
                 />
                 <textarea
                     className="border rounded-sm w-full max-h-120 h-40 p-2 mt-4"
