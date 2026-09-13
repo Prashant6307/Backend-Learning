@@ -5,6 +5,7 @@ const NotesModel = require("../models/notes")
 
 const notesRouter = express.Router()
 
+// save the note
 notesRouter.post("/notes", userAuth, async (req, res) => {
 
     try {
@@ -30,6 +31,7 @@ notesRouter.post("/notes", userAuth, async (req, res) => {
     }
 })
 
+// get all notes
 notesRouter.get("/notes", userAuth, async (req, res) => {
     try {
         const notes = await NotesModel.find({
@@ -46,22 +48,24 @@ notesRouter.get("/notes", userAuth, async (req, res) => {
     }
 })
 
+// update title and description
 notesRouter.patch("/notes/:id", userAuth, async (req, res) => {
     try {
+        const { title, description } = req.body
         const notes = await NotesModel.findOneAndUpdate({
             _id: req.params.id,
             userId: req.user._id
         },
             {
                 title,
-                description
+                description,
             },
             {
                 new: true
             })
 
-        if(!notes){
-            throw new Error ("Note not found")
+        if (!notes) {
+            throw new Error("Note not found")
         }
 
         res.status(200).json({
@@ -75,6 +79,41 @@ notesRouter.patch("/notes/:id", userAuth, async (req, res) => {
     }
 })
 
+// update note status
+notesRouter.patch("/notes/status/:id", userAuth, async (req, res) => {
+    try {
+        const { status } = req.body;
+
+        const note = await NotesModel.findOneAndUpdate(
+            {
+                _id: req.params.id,
+                userId: req.user._id
+            },
+            {
+                status
+            },
+            {
+                new: true
+            }
+        );
+
+        if (!note) {
+            throw new Error("Note not found");
+        }
+
+        res.status(200).json({
+            message: "Note status updated successfully",
+            data: note
+        });
+
+    } catch (err) {
+        res.status(400).json({
+            message: err.message
+        });
+    }
+});
+
+// delete a note
 notesRouter.delete("/notes/:id", userAuth, async (req, res) => {
     try {
         const notes = await NotesModel.findOneAndDelete({
@@ -82,8 +121,8 @@ notesRouter.delete("/notes/:id", userAuth, async (req, res) => {
             userId: req.user._id
         })
 
-        if(!notes){
-            throw new Error ("Note not found")
+        if (!notes) {
+            throw new Error("Note not found")
         }
 
         res.status(200).json({
@@ -97,29 +136,6 @@ notesRouter.delete("/notes/:id", userAuth, async (req, res) => {
     }
 })
 
-notesRouter.patch("/notes/:id", userAuth, async (req, res) => {
-    try {
-        const notes = await NotesModel.findOneAndUpdate({
-            _id: req.params.id,
-            userId: req.user._id
-        },
-            {
-                title,
-                description
-            },
-            {
-                new: true
-            })
 
-        res.status(200).json({
-            message: "Note fetched successfully",
-            data: notes
-        })
-    } catch (err) {
-        res.status(400).json({
-            message: err.message
-        })
-    }
-})
 
 module.exports = notesRouter

@@ -12,6 +12,11 @@ const notesSchema = mongoose.Schema({
         required: true,
         trim: true
     },
+    status:{
+        type: String,
+        default: "pending",
+        enum: ["pending", "completed"],
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Users",
