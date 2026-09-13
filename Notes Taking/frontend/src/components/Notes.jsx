@@ -179,7 +179,7 @@ const Notes = () => {
                                     Edit
                                 </button>
                                 <button
-                                    className="btn btn-info btn-xs sm:btn-sm md:btn-md"
+                                    className="btn btn-success btn-xs sm:btn-sm md:btn-md"
                                     onClick={() => handleSave(allNotes._id, "pending")}
 
                                 >
