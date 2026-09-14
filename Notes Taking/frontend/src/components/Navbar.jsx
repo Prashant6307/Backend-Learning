@@ -9,7 +9,7 @@ const Navbar = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post(import.meta.env.VITE_BASE_URL + "/logout",{},{ withCredentials: true })
+            await axios.post(import.meta.env.VITE_BASE_URL + "/logout", {}, { withCredentials: true })
             navigate("/login")
         } catch (err) {
             console.log(err.message);
@@ -33,7 +33,7 @@ const Navbar = () => {
                         <div className="w-10 rounded-full">
                             <img
                                 alt="Tailwind CSS Navbar component"
-                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                src="https://img.magnific.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3407.jpg?semt=ais_hybrid&w=740&q=80" />
                         </div>
                     </div>
                     <ul
