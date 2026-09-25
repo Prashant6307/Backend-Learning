@@ -4,9 +4,6 @@ const userSchema = new mongoose.Schema({
     firstName:{
         type: String,
     },
-    lastName:{
-        type: String,
-    },
     emailId:{
         type: String,
     },
@@ -15,6 +12,10 @@ const userSchema = new mongoose.Schema({
     },
     profileBio:{
         type: String,
+    },
+    photoUrl:{
+        type: String,
+        default: "https://img.magnific.com/premium-vector/default-av…ration_561158-3407.jpg?semt=ais_hybrid&w=740&q=80"
     }
 },{timestamps: true})
 

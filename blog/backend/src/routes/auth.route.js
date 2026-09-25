@@ -2,6 +2,8 @@ const express = require('express')
 const bcrypt = require('bcrypt')
 const UserModel = require("../models/user")
 const jwt = require("jsonwebtoken")
+const { validateSignupData } = require('../utils/validation')
+const validator = require('validator');
 
 const authRouter = express.Router()
 
@@ -13,6 +15,8 @@ authRouter.post("/signup", async (req, res) => {
         if (!firstName || !emailId || !password) {
             throw new Error("All fields are required")
         }
+
+        validateSignupData(req)
 
         const passwordHash = await bcrypt.hash(password, 10)
 
@@ -46,6 +50,10 @@ authRouter.post("/signup", async (req, res) => {
 authRouter.post("/login", async (req, res) => {
     try {
         const { emailId, password } = req.body
+
+        if (!validator.isEmail(emailId)) {
+            throw new Error("Invalid credentials")
+        }
 
         const user = await UserModel.findOne({ emailId: emailId })
 
