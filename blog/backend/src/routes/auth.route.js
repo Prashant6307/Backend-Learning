@@ -22,9 +22,9 @@ authRouter.post("/signup", async (req, res) => {
 
         const savedUser = await userData.save()
 
-        const token = jwt.sign({_id: savedUser._id}, process.env.JWT_SECRET)
+        const token = jwt.sign({ _id: savedUser._id }, process.env.JWT_SECRET)
 
-        res.cookie("token", token , {expiresIn: "7d"}, {httpOnly: true})
+        res.cookie("token", token, { expiresIn: "7d", httpOnly: true })
 
         res.status(201).json({
             message: "Signup successful",

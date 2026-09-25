@@ -1,5 +1,5 @@
 const express = require('express')
-const connectDB  = require('./db/db')
+const connectDB = require('./db/db')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser');
 
@@ -10,18 +10,19 @@ app.use(express())
 app.use(express.json())
 app.use(cookieParser())
 const authRouter = require("./routes/auth.route")
+const blogRouter = require("./routes/blog.route")
 
+app.use("/", authRouter)
+app.use("/", blogRouter)
 
-app.use("/",authRouter)
+connectDB().then(() => {
 
-connectDB().then(()=>{
-    
     console.log("Database connected successfully")
 
-    app.listen(3000, ()=>{
+    app.listen(3000, () => {
         console.log("Server started on port 3000")
-        
+
     })
-    
+
 })
 
