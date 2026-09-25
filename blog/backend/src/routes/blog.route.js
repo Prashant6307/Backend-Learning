@@ -50,7 +50,7 @@ blogRouter.get("/blog/:id", async (req, res) => {
 
     try {
         const id = req.params.id
-        const blog = await BlogModel.findById(id)
+        const blog = await BlogModel.findById(id).populate("author", "firstName emailId photoUrl")
 
         if (!blog) {
             return res.status(404).json({
@@ -76,7 +76,7 @@ blogRouter.patch("/blog/:id", userAuth, async (req, res) => {
 
         const { title, content, category } = req.body
 
-        const blog = await BlogModel.findById(id)
+        const blog = await BlogModel.findById(id).populate("author", "firstName emailId photoUrl")
 
         if (!blog) {
             return res.status(400).json({
@@ -113,7 +113,7 @@ blogRouter.delete("/blog/:id", userAuth, async (req, res)=>{
     try {
         const id = req.params.id
 
-        const blog = await BlogModel.findById(id)
+        const blog = await BlogModel.findById(id).populate("author", "firstName emailId photoUrl")
 
         if (!blog) {
             return res.status(404).json({

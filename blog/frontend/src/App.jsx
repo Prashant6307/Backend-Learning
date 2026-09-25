@@ -6,6 +6,7 @@ import Blogs from "./components/Blogs"
 import CreateBlog from "./components/CreateBlog"
 import { Provider } from "react-redux"
 import appStore from "./utils/appStore"
+import BlogDetails from "./components/BlogDetails"
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
 
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/create" element={<CreateBlog />} />
+              <Route path="/blog/:id" element={<BlogDetails />} />
 
             </Route>
 

@@ -2,9 +2,12 @@ import axios from "axios"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addBlog } from "../utils/blogSlice"
+import { useNavigate } from "react-router-dom"
 
 const Blogs = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const blogs = useSelector(store => store.blogs)
 
     const fetchAllBlogs = async () => {
@@ -19,11 +22,11 @@ const Blogs = () => {
     }, [])
 
     return (
-        <div className=" w-full max-w-xl mx-auto border border-black flex  p-4">
+        <div  className=" w-full max-w-xl mx-auto border border-black flex  p-4">
             {
                 blogs.map((blog) =>
 
-                    <div key={blog?._id}>
+                    <div key={blog?._id} onClick={() => navigate(`/blog/${blog._id}`)} className="cursor-pointer">
 
                         <div className="flex gap-2">
                             <img src={blog?.author?.photoUrl} alt="" className="w-12 rounded-full" />
