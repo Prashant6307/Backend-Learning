@@ -7,13 +7,13 @@ const Body = () => {
 
     
   return (
-    <>
+    <div >
         <Navbar></Navbar>
 
-        <Outlet></Outlet>
+        <Outlet className="max-w-7xl mx-auto"></Outlet>
 
         <Footer></Footer>
-    </>
+    </div>
   )
 }
 

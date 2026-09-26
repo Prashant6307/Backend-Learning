@@ -18,22 +18,31 @@ const Login = () => {
         {
           withCredentials: true
         })
+
+        navigate("/blogs")
     }
 
     catch (err) {
       console.log(err.message)
     }
 
-    navigate("/blogs")
+    
 
 
   }
   const handleSignup = async () => {
-    const res = await axios.post(import.meta.env.VITE_BASE_URL + "/signup", { firstName, emailId, password }, { withCredentials: true })
+    try{
 
-    console.log(res.data)
-
-    navigate("/blogs")
+      const res = await axios.post(import.meta.env.VITE_BASE_URL + "/signup", { firstName, emailId, password }, { withCredentials: true })
+  
+      console.log(res.data)
+  
+      navigate("/blogs")
+    }
+    catch(err){
+      console.log(err.message)
+      
+    }
   }
 
   return (

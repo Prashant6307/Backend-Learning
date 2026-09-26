@@ -22,13 +22,13 @@ const Blogs = () => {
     }, [])
 
     return (
-        <div  className=" w-full max-w-xl mx-auto border border-black flex  p-4">
+        <div  className=" w-full max-w-xl mx-auto   p-4">
             {
                 blogs.map((blog) =>
 
-                    <div key={blog?._id} onClick={() => navigate(`/blog/${blog._id}`)} className="cursor-pointer">
+                    <div key={blog?._id} onClick={() => navigate(`/blog/${blog._id}`)} className="cursor-pointer flex flex-col border border-gray-200 rounded-md mb-4 p-2">
 
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 ">
                             <img src={blog?.author?.photoUrl} alt="" className="w-12 rounded-full" />
                             <div className="text-sm">
                                 <p className="font-bold">{blog?.author?.firstName}</p>

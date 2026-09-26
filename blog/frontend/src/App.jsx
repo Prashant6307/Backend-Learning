@@ -20,12 +20,15 @@ function App() {
             <Route path="/login" element={<Login />} />
 
             <Route path="/" element={<Body />}>
+              <Route index element={<Blogs />} />
 
               <Route path="/blogs" element={<Blogs />} />
-              <Route path="/create" element={<CreateBlog />} />
+
               <Route path="/blog/:id" element={<BlogDetails />} />
 
             </Route>
+
+            <Route path="/create" element={<CreateBlog />} />
 
           </Routes>
 
