@@ -7,10 +7,12 @@ const Body = () => {
 
     
   return (
-    <div >
+    <div className="min-h-screen flex flex-col">
         <Navbar></Navbar>
 
-        <Outlet className="max-w-7xl mx-auto"></Outlet>
+        <main className="flex-1">
+                <Outlet />
+            </main>
 
         <Footer></Footer>
     </div>

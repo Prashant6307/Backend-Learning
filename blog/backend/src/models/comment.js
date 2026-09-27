@@ -3,15 +3,23 @@ const mongoose = require('mongoose')
 const commentSchema = new mongoose.Schema({
     text: {
         type: String,
-        
+        required: true
     },
-    userId: {
+    replies:{
+        type: [
+
+        ]
+    },
+    author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Users",
+        ref: "User",
+        required: true
+
     },
     blogId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Blog"
+        ref: "Blog",
+        required: true
     }
 }, { timestamps: true })
 
