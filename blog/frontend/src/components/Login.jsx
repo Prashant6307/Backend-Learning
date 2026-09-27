@@ -1,7 +1,9 @@
 
 import axios from "axios"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { addLoggedInUserInfo } from "../utils/userSlice"
 
 const Login = () => {
   const [isSignupForm, setIsSignupForm] = useState(false)
@@ -10,14 +12,17 @@ const Login = () => {
   const [password, setPassword] = useState("")
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleLogin = async () => {
     try {
-      await axios.post(import.meta.env.VITE_BASE_URL + "/login",
+      const res = await axios.post(import.meta.env.VITE_BASE_URL + "/login",
         { emailId, password },
         {
           withCredentials: true
         })
+
+        dispatch(addLoggedInUserInfo(res.data.data))
 
         navigate("/blogs")
     }
