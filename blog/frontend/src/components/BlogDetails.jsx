@@ -10,6 +10,7 @@ const BlogDetails = () => {
 
     const loggedInUser = useSelector(store => store.user)
 
+
     const { id } = useParams()
     const [blog, setBlog] = useState(null)
     const [isEditing, setIsEditing] = useState(false)

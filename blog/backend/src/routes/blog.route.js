@@ -33,11 +33,45 @@ blogRouter.post("/blog", userAuth, async (req, res) => {
 // get all blogs
 blogRouter.get("/blogs", async (req, res) => {
     try {
-        const blogs = await BlogModel.find().populate("author", "firstName emailId photoUrl")
 
+        const { search } = req.query
+
+        let blogs
+
+        if (search) {
+
+            blogs = await BlogModel.find({
+                $or: [
+                    {
+                        title: {
+                            $regex: search,
+                            $options: "i"
+                        }
+                    },
+                    {
+                        content: {
+                            $regex: search,
+                            $options: "i"
+                        }
+                    },
+                    {
+                        tags: {
+                            $regex: search,
+                            $options: "i"
+                        }
+                    }
+                ]
+            }).populate("author", "firstName photoUrl")
+
+        } else {
+
+            blogs = await BlogModel.find().populate("author", "firstName photoUrl")
+
+        }
         res.status(200).json({
             data: blogs
         })
+
     } catch (err) {
         res.status(400).json({
             message: err.message

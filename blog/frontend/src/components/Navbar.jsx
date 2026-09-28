@@ -1,12 +1,15 @@
 
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
-import { addSearch } from "../utils/searchSlice"
+import { addSearch, removeSearch } from "../utils/searchSlice"
 import axios from "axios"
+import { useState } from "react"
 
 const Navbar = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const [searchText, setSearchText] = useState()
 
     const handleLogout = async () => {
         try {
@@ -24,12 +27,31 @@ const Navbar = () => {
                     <Link to="/blogs" className="btn btn-ghost text-sm  sm:text-xl ">Blog</Link>
                 </div>
                 <div className="flex gap-2">
-                    <button onClick={() => navigate("create")} className="text-blue-800 font-medium border border-b-blue-800 px-4 rounded-md cursor-pointer">Create Post</button>
+                    <button
+                        onClick={() => navigate("create")}
+                        className="text-blue-800 font-medium border border-b-blue-800 px-4 rounded-md cursor-pointer"
+                    >
+                        Create Post
+                    </button>
                     <input
                         type="text"
                         placeholder="Search Notes"
                         className="border w-24 sm:p-1 rounded-md sm:w-64"
-                        onChange={(e) => dispatch(addSearch(e.target.value))}
+                        onChange={(e) => {
+
+                            const value = e.target.value
+                            if(value === ""){
+
+                                dispatch(removeSearch())
+                            }
+                            setSearchText(value)}
+                        }
+                        onKeyDown={(e)=>{
+                            if(e.key === "Enter"){
+                                dispatch(addSearch(searchText))
+                                navigate(`/search?query=${searchText}`)
+                            }
+                        }}
                     />
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">

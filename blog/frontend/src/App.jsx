@@ -9,6 +9,7 @@ import { addLoggedInUserInfo } from "./utils/userSlice"
 import { useEffect } from "react"
 import axios from "axios"
 import { useDispatch } from "react-redux"
+import BlogSearchResults from "./components/BlogSearchResults"
 
 
 function App() {
@@ -23,31 +24,33 @@ function App() {
 
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getLoggedInUser()
-  },[])
+  }, [])
 
   return (
     <>
 
-        <BrowserRouter >
-          <Routes>
-            <Route path="/login" element={<Login />} />
+      <BrowserRouter >
+        <Routes>
+          <Route path="/login" element={<Login />} />
 
-            <Route path="/" element={<Body />}>
-              <Route index element={<Blogs />} />
+          <Route path="/" element={<Body />}>
+            <Route index element={<Blogs />} />
 
-              <Route path="/blogs" element={<Blogs />} />
+            <Route path="/blogs" element={<Blogs />} />
 
-              <Route path="/blog/:id" element={<BlogDetails />} />
+            <Route path="/blog/:id" element={<BlogDetails />} />
 
-            </Route>
+            <Route path="/search" element={<BlogSearchResults />} />
 
-            <Route path="/create" element={<CreateBlog />} />
+          </Route>
 
-          </Routes>
+          <Route path="/create" element={<CreateBlog />} />
 
-        </BrowserRouter>
+        </Routes>
+
+      </BrowserRouter>
 
     </>
   )
