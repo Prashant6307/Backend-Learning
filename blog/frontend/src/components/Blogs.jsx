@@ -28,7 +28,7 @@ const Blogs = () => {
             {
                 blogs.map((blog) =>
 
-                    <div key={blog?._id} onClick={() => navigate(`/blog/${blog._id}`)} className="cursor-pointer flex flex-col border border-gray-200 rounded-md mb-4 p-2">
+                    <div key={blog?._id} onClick={() => navigate(`/blog/${blog._id}`)} className="cursor-pointer flex flex-col">
 
                         <BlogCard blog={blog}/>
 
