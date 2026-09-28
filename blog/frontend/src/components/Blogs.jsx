@@ -22,7 +22,7 @@ const Blogs = () => {
     }, [])
 
     return (
-        <div  className=" w-full max-w-xl mx-auto   p-4">
+        <div className=" w-full max-w-xl mx-auto   p-4">
             {
                 blogs.map((blog) =>
 
@@ -43,6 +43,14 @@ const Blogs = () => {
 
                         <div className="">
                             <h2 className="ml-14 text-2xl font-bold">{blog?.title}</h2>
+                        </div>
+
+                        <div className="flex gap-2 mt-2 p-2">
+                            {blog?.tags.map((tag, index) =>
+                                <div key={index} >
+                                    <p className="px-3 py-1 rounded-full border">#{tag}</p>
+                                </div>
+                            )}
                         </div>
 
                     </div>

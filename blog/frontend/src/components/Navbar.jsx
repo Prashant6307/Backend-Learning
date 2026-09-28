@@ -24,7 +24,7 @@ const Navbar = () => {
                     <Link to="/blogs" className="btn btn-ghost text-sm  sm:text-xl ">Blog</Link>
                 </div>
                 <div className="flex gap-2">
-                    <button onClick={() => navigate("create")} className="text-blue-800 font-medium border border-b-blue-800 px-4 rounded-md">Create Post</button>
+                    <button onClick={() => navigate("create")} className="text-blue-800 font-medium border border-b-blue-800 px-4 rounded-md cursor-pointer">Create Post</button>
                     <input
                         type="text"
                         placeholder="Search Notes"

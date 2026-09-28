@@ -7,12 +7,12 @@ const blogRouter = express.Router()
 // create blog
 blogRouter.post("/blog", userAuth, async (req, res) => {
     try {
-        const { title, content, category } = req.body
+        const { title, content, tags } = req.body
 
         const blog = new BlogModel({
             title,
             content,
-            category,
+            tags,
             author: req.user._id
         })
 
@@ -123,7 +123,7 @@ blogRouter.delete("/blog/:id", userAuth, async (req, res) => {
 
 
         // check if logged in user owns the blog
-        if (blog.author.toString() !== req.user._id.toString()) {
+        if (blog.author._id.toString() !== req.user._id.toString()) {
 
             return res.status(403).json({
                 message: "You cannot delete this blog"
