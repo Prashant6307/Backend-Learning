@@ -38,15 +38,15 @@ const CreateBlog = () => {
   }
 
 
-  const handlePublish = async() =>{
+  const handlePublish = async () => {
 
-    try{
-    const res = await axios.post(import.meta.env.VITE_BASE_URL+ "/blog", {title, content, tags:selectedTags},{withCredentials:true})
-    console.log(res.data.message);
+    try {
+      const res = await axios.post(import.meta.env.VITE_BASE_URL + "/blog", { title, content, tags: selectedTags }, { withCredentials: true })
+      console.log(res.data.message);
     }
-    catch(err){
+    catch (err) {
       console.log(err.message);
-      
+
     }
   }
 
@@ -54,8 +54,9 @@ const CreateBlog = () => {
     <div className="max-w-7xl mx-auto p-4 min-h-screen">
 
       <div className="border border-gray-300 max-w-4xl rounded-md p-8 h-170 overflow-y-scroll">
-        <TextareaAutosize className="outline-none w-full placeholder:text-5xl font-bold text-5xl h-full" placeholder="New post title here..." 
-        onChange={(e)=>setTitle(e.target.value)}
+        <TextareaAutosize
+          className="outline-none w-full placeholder:text-5xl font-bold text-5xl h-full" placeholder="New post title here..."
+          onChange={(e) => setTitle(e.target.value)}
         />
         <div className="my-4">
 
@@ -127,7 +128,7 @@ const CreateBlog = () => {
             minRows={5}
             placeholder="Write your blog..."
             className="w-full border p-4 rounded-lg outline-none"
-            onChange={(e)=> setContent(e.target.value)}
+            onChange={(e) => setContent(e.target.value)}
           />
         </div>
 

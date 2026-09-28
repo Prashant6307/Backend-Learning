@@ -76,7 +76,7 @@ blogRouter.patch("/blog/:id", userAuth, async (req, res) => {
 
         const { title, content, category } = req.body
 
-        const blog = await BlogModel.findById(id).populate("author", "firstName emailId photoUrl")
+        const blog = await BlogModel.findById(id)
 
         if (!blog) {
             return res.status(400).json({
@@ -84,7 +84,7 @@ blogRouter.patch("/blog/:id", userAuth, async (req, res) => {
             })
         }
 
-        if (blog.author.toString() !== req.user._id.toString()) {
+        if (blog.author._id.toString() !== req.user._id.toString()) {
             return res.status(400).json({
                 message: "You can not edit this blog"
             })
@@ -108,7 +108,7 @@ blogRouter.patch("/blog/:id", userAuth, async (req, res) => {
 })
 
 // delete blog
-blogRouter.delete("/blog/:id", userAuth, async (req, res)=>{
+blogRouter.delete("/blog/:id", userAuth, async (req, res) => {
 
     try {
         const id = req.params.id
