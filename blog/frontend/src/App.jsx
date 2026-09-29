@@ -10,6 +10,7 @@ import { useEffect } from "react"
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import BlogSearchResults from "./components/BlogSearchResults"
+import Profile from "./components/Profile"
 
 
 function App() {
@@ -44,9 +45,13 @@ function App() {
 
             <Route path="/search" element={<BlogSearchResults />} />
 
+            <Route path="/profile" element={<Profile></Profile>} />
+
           </Route>
 
           <Route path="/create" element={<CreateBlog />} />
+
+
 
         </Routes>
 

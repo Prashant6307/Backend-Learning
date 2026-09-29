@@ -204,19 +204,19 @@ const BlogDetails = () => {
 
                         ) : (
 
-                            <>
+                            <div className="w-full">
                                 <div className="text-xl">
                                     <p onClick={getLikes}>❤️{likesCount}</p>
                                 </div>
 
-                                <h2 className="text-5xl font-bold my-4">
+                                <h2 className="text-5xl font-bold my-4 ">
                                     {blog?.title}
                                 </h2>
 
                                 <p className="text-xl">
                                     {blog?.content}
                                 </p>
-                            </>
+                            </div>
 
                         )
                     }

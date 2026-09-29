@@ -4,7 +4,7 @@ const BlogCard = ({blog}) => {
     console.log(blog.author)
     const navigate = useNavigate()
     return (
-        <div onClick={()=>navigate(`/blog/${blog._id}`)} className="border border-gray-200 rounded-md mb-4 p-2 ">
+        <div onClick={()=>navigate(`/blog/${blog._id}`)} className="border border-gray-200 rounded-md mb-4 p-2 min-w-full">
             <div className="flex gap-2 ">
                 <img src={blog?.author?.photoUrl} alt="" className="w-12 rounded-full" />
                 <div className="text-sm">
