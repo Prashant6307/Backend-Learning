@@ -79,7 +79,7 @@ blogRouter.get("/blogs", async (req, res) => {
     }
 })
 
-// search blog
+// get a particular blog
 blogRouter.get("/blog/:id", async (req, res) => {
 
     try {
@@ -172,6 +172,50 @@ blogRouter.delete("/blog/:id", userAuth, async (req, res) => {
         })
 
     } catch (err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+})
+
+// like blog
+blogRouter.patch("/blog/:id/like",userAuth, async (req, res) => {
+
+    try {
+        const id = req.params.id
+
+        const userId = req.user._id
+
+        const blog = await BlogModel.findById(id)
+
+        if (!blog) {
+            return res.status(404).json({
+                message: "Blog not found"
+            })
+        }
+
+        const alreadyLiked = blog.likes.some(
+            (id) => id.toString() === userId.toString()
+        )
+
+        if (alreadyLiked) {
+            blog.likes = blog.likes.filter(
+                (id) => id.toString() !== userId.toString()
+            )
+        }
+        else {
+            blog.likes.push(userId)
+        }
+        
+
+        await blog.save()
+
+        res.status(200).json({
+            message: "Like Updated",
+            data: blog
+        })
+    }
+    catch (err) {
         res.status(400).json({
             message: err.message
         })

@@ -21,8 +21,13 @@ const blogSchema = new mongoose.Schema({
         default: ["General"],
     },
     likes: {
-        type: Number,
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }],
+        default: []
     },
+
 }, { timestamps: true })
 
 const BlogModel = new mongoose.model("Blog", blogSchema)

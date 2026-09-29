@@ -16,6 +16,7 @@ const BlogDetails = () => {
     const [isEditing, setIsEditing] = useState(false)
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
+    const [likesCount, setLikesCount] = useState(0)
 
     const navigate = useNavigate()
 
@@ -25,6 +26,7 @@ const BlogDetails = () => {
             const res = await axios.get(import.meta.env.VITE_BASE_URL + "/blog/" + id)
 
             setBlog(res.data.data)
+            setLikesCount(res.data.data.likes.length)
         }
         catch (err) {
             console.log(err.message);
@@ -32,9 +34,7 @@ const BlogDetails = () => {
         }
     }
 
-    useEffect(() => {
-        getBlogDetails()
-    }, [id])
+
 
     const handleBlogEdit = () => {
         setTitle(blog.title)
@@ -100,7 +100,22 @@ const BlogDetails = () => {
 
     }
 
+    const getLikes = async () => {
+        try {
+            const res = await axios.patch(import.meta.env.VITE_BASE_URL + "/blog/" + id + "/like", {}, { withCredentials: true })
+            console.log(res.data.data)
+            setLikesCount(res.data.data?.likes.length)
 
+        } catch (err) {
+            console.log(err.message);
+
+        }
+
+    }
+
+    useEffect(() => {
+        getBlogDetails()
+    }, [id])
 
     return (
         <div className="max-w-7xl mx-auto">
@@ -118,6 +133,7 @@ const BlogDetails = () => {
                             </p>
                         </div>
                     </div>
+
                     <div>
                         {
                             loggedInUser?._id?.toString() === (blog?.author?._id || blog?.author)?.toString()
@@ -131,7 +147,8 @@ const BlogDetails = () => {
                                         Edit
                                     </button>
 
-                                    <button className="rounded-md bg-red-400 p-1 px-4 font-medium text-white hover:bg-red-600 cursor-pointer"
+                                    <button className="rounded-md bg-red-400 p-1 px-4 font-medium 
+                                    text-white hover:bg-red-600 cursor-pointer"
                                         onClick={() => deleteBlog()}
                                     >
                                         Delete
@@ -188,11 +205,15 @@ const BlogDetails = () => {
                         ) : (
 
                             <>
-                                <h2 className="text-2xl font-bold">
+                                <div className="text-xl">
+                                    <p onClick={getLikes}>❤️{likesCount}</p>
+                                </div>
+
+                                <h2 className="text-5xl font-bold my-4">
                                     {blog?.title}
                                 </h2>
 
-                                <p>
+                                <p className="text-xl">
                                     {blog?.content}
                                 </p>
                             </>
@@ -200,7 +221,10 @@ const BlogDetails = () => {
                         )
                     }
 
+
                 </div>
+
+
 
                 <Comment></Comment>
 
