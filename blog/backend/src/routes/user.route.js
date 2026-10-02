@@ -1,17 +1,17 @@
 const express = require('express');
 const userRouter = express.Router()
-const {userAuth} = require("../middleware/auth");
+const { userAuth } = require("../middleware/auth");
 const BlogModel = require('../models/blog');
 const UserModel = require('../models/user');
 
-userRouter.get("/profile", userAuth, async(req, res)=>{
+userRouter.get("/profile", userAuth, async (req, res) => {
 
-    try{
+    try {
         res.status(200).json({
             data: req.user
         })
 
-    }catch(err){
+    } catch (err) {
 
         res.status(400).json({
             message: err.message
@@ -21,21 +21,21 @@ userRouter.get("/profile", userAuth, async(req, res)=>{
 
 })
 
-userRouter.get("/profile/blogs", userAuth, async(req, res)=>{
+userRouter.get("/profile/blogs", userAuth, async (req, res) => {
 
-    try{
+    try {
 
-        const blogs = await BlogModel.find({author: req.user._id}).populate("author", "firstName photoUrl")
+        const blogs = await BlogModel.find({ author: req.user._id }).populate("author", "firstName photoUrl")
 
-        if(!blogs){
-            throw new Error ("Can not fetch profile")
+        if (!blogs) {
+            throw new Error("Can not fetch profile")
         }
-        
+
         res.status(200).json({
             data: blogs
         })
 
-    }catch(err){
+    } catch (err) {
 
         res.status(400).json({
             message: err.message
@@ -45,19 +45,21 @@ userRouter.get("/profile/blogs", userAuth, async(req, res)=>{
 
 })
 
-userRouter.patch("/profile/edit", userAuth, async(req, res)=>{
+userRouter.patch("/profile/edit", userAuth, async (req, res) => {
     try {
-        const { firstName, profileBio, photoUrl} = req.body
+        const { firstName, profileBio, photoUrl } = req.body
 
         const user = await UserModel.findById(req.user._id)
 
-        if(!user){
-            throw new Error ("User not found")
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            })
         }
 
-        user.firstName = firstName || user.firstName
-        user.profileBio = profileBio || user.profileBio
-        user.photoUrl = photoUrl || user.photoUrl
+        if (firstName !== undefined) user.firstName = firstName
+        if (photoUrl !== undefined) user.photoUrl = photoUrl
+        if (profileBio !== undefined) user.profileBio = profileBio
 
         await user.save()
 
